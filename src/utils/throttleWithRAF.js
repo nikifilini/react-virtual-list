@@ -1,15 +1,15 @@
 export default (fn) => {
-  let running = false;
+  let running = false
 
-  return () => {
-    if (running) return;
+  return (...args) => {
+    if (running) return
 
-    running = true;
+    running = true
 
     window.requestAnimationFrame(() => {
-      fn.apply(this, arguments);
+      fn.apply(this, args)
 
-      running = false;
-    });
-  };
-};
+      running = false
+    })
+  }
+}
