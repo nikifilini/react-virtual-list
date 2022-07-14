@@ -18,7 +18,7 @@ declare type Virtual<T> = {
 };
 declare type ElementProps<T> = Options<T> & Virtual<T>;
 declare type ListProps<T> = {
-    children: (props: ElementProps<T>, scrollableRef: React.RefObject<any>, ref: React.RefObject<any>) => JSX.Element;
+    children: (props: ElementProps<T>, scrollableRef: React.Ref<any>, ref: React.RefObject<any>) => JSX.Element;
     items: T[];
     itemHeight: number;
     itemBuffer: number;

@@ -31,7 +31,7 @@ type Virtual<T> = {
 type ElementProps<T> = Options<T> & Virtual<T>
 
 type ListProps<T> = {
-  children: (props: ElementProps<T>, scrollableRef: React.RefObject<any>, ref: React.RefObject<any>) => JSX.Element
+  children: (props: ElementProps<T>, scrollableRef: React.Ref<any>, ref: React.RefObject<any>) => JSX.Element
   items: T[]
   itemHeight: number
   itemBuffer: number
@@ -43,13 +43,13 @@ function VirtualList<T>({ children: getComponent, items, itemHeight, itemBuffer 
     lastItemIndex: -1,
   })
 
-  const containerRef = React.useRef(null)
+  const [containerRef, setContainerRef] = React.useState<Element | null>(null)
 
   const options: Options<T> = {
     items,
     itemBuffer,
     itemHeight,
-    container: containerRef.current,
+    container: containerRef,
   }
 
   const element = React.useRef(document.createElement('div'))
@@ -117,7 +117,7 @@ function VirtualList<T>({ children: getComponent, items, itemHeight, itemBuffer 
     setStateIfNeeded(element.current, options.container, items, itemHeight, itemBuffer)
   })
 
-  return getComponent({ ...(mapVirtualToProps(options, state) as Virtual<T>), ...options }, containerRef, element)
+  return getComponent({ ...(mapVirtualToProps(options, state) as Virtual<T>), ...options }, (el: Element) => setContainerRef(el), element)
 }
 
 export default VirtualList
